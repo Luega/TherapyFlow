@@ -26,11 +26,16 @@ namespace therapyFlow.Modules.Notes
         [HttpGet("{id}")]
         public ActionResult<NotesModel> GetOne(int id)
         {
+            if (FakeDB.FirstOrDefault(n => n.Id == id) is null)
+            {
+                return NotFound();
+            }
+
             return Ok(FakeDB.FirstOrDefault(n => n.Id == id));
         }
 
         [HttpPost]
-        public ActionResult<NotesModel> CreateNote(RequestPOST_NotesModel newNote)
+        public ActionResult<NotesModel> CreateNote(Request_NotesModel newNote)
         {
             NotesModel note = new NotesModel { 
                 Id = FakeDB.Max(n => n.Id) + 1,
@@ -39,6 +44,20 @@ namespace therapyFlow.Modules.Notes
              };
             FakeDB.Add(note);
             return Ok(note);
+        }
+
+        [HttpPut]
+        public ActionResult<NotesModel> UpdateNote(int id, Request_NotesModel newNote)
+        {
+            if (FakeDB.FirstOrDefault(n => n.Id == id) is null)
+            {
+                return NotFound();
+            }
+            
+            NotesModel ?oldNote = FakeDB.FirstOrDefault(n => n.Id == id);
+            oldNote!.title = newNote.title;
+            oldNote!.text = newNote.text;
+            return Ok(FakeDB.FirstOrDefault(n => n.Id == id));
         }
     }
 }

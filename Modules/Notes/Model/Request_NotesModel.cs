@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace therapyFlow.Modules.Notes.Model
 {
-    public class RequestPOST_NotesModel
+    public class Request_NotesModel
     {
         public string title { set; get; } = "";
         public string text { set; get; } = "";
