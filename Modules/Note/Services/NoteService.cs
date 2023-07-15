@@ -2,55 +2,110 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using therapyFlow.Modules.Common.Models;
 
 namespace therapyFlow.Modules.Note.Services
 {
     public class NoteService : INoteService
     {
         private static List<NoteModel> FakeDB = new List<NoteModel> {
-            new NoteModel{ Id = 0, title = "Test", text = "Text" },
-            new NoteModel{ Id = 1, title = "Test2", text = "Text2" },
-            new NoteModel{ Id = 2, title = "Test3", text = "Text3" }
+            new NoteModel{ Id = 0, Title = "Test", Text = "Text" },
+            new NoteModel{ Id = 1, Title = "Test2", Text = "Text2" },
+            new NoteModel{ Id = 2, Title = "Test3", Text = "Text3" }
         };
-        public NoteModel CreateNote(Request_NoteModel newNote)
+        public ServiceResponseModel<NoteModel> CreateNote(Request_NoteModel newNote)
         {
+            ServiceResponseModel<NoteModel> serviceResponse = new ServiceResponseModel<NoteModel>();
+
             NoteModel note = new NoteModel { 
                 Id = FakeDB.Max(n => n.Id) + 1,
-                title = newNote.title,
-                text = newNote.text,
+                Title = newNote.Title,
+                Text = newNote.Text,
              };
             FakeDB.Add(note);
 
-            return note;
+            serviceResponse.Data = note;
+
+            return serviceResponse;
         }
 
-        public int? DeleteNote(int id)
+        public ServiceResponseModel<string> DeleteNote(int id)
         {
-            if (FakeDB.FirstOrDefault(n => n.Id == id) is null) {
-                return null;
+            ServiceResponseModel<string> serviceResponse = new ServiceResponseModel<string>();
+
+            try
+            {
+                if (FakeDB.FirstOrDefault(n => n.Id == id) is null) 
+                {
+                    throw new Exception($"Id {id} not found.");
+                }
+
+                FakeDB.Remove(FakeDB.FirstOrDefault(n => n.Id == id)!);
+                serviceResponse.Data = "Note deleted successfully";
             }
+            catch (System.Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+
+
+            return serviceResponse;
+        }
+
+        public ServiceResponseModel<List<NoteModel>> GetAll()
+        {
+            ServiceResponseModel<List<NoteModel>> serviceResponse = new ServiceResponseModel<List<NoteModel>>();
+            serviceResponse.Data = FakeDB;
             
-            FakeDB.Remove(FakeDB.FirstOrDefault(n => n.Id == id)!);
-
-            return id;
+            return serviceResponse;
         }
 
-        public List<NoteModel> GetAll()
+        public ServiceResponseModel<NoteModel> GetOne(int id)
         {
-            return FakeDB;
+            ServiceResponseModel<NoteModel> serviceResponse = new ServiceResponseModel<NoteModel>();
+            
+            try
+            {
+                if (FakeDB.FirstOrDefault(n => n.Id == id) is null)
+                {
+                    throw new Exception($"Id {id} not found.");
+                }
+
+                serviceResponse.Data = FakeDB.FirstOrDefault(n => n.Id == id);
+            }
+            catch (System.Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+
+            return serviceResponse;
         }
 
-        public NoteModel GetOne(int id)
+        public ServiceResponseModel<NoteModel> UpdateNote(int id, Request_NoteModel updatedNote)
         {
-            return FakeDB.FirstOrDefault(n => n.Id == id);
-        }
+            ServiceResponseModel<NoteModel> serviceResponse = new ServiceResponseModel<NoteModel>();
+            
+            try
+            {
+                if (FakeDB.FirstOrDefault(n => n.Id == id) is null)
+                {
+                    throw new Exception($"Id {id} not found.");
+                }
 
-        public NoteModel UpdateNote(int id, Request_NoteModel updatedNote)
-        {
-            NoteModel ?oldNote = FakeDB.FirstOrDefault(n => n.Id == id);
-            oldNote!.title = updatedNote.title;
-            oldNote!.text = updatedNote.text;
-            return FakeDB.FirstOrDefault(n => n.Id == id);
+                NoteModel ?oldNote = FakeDB.FirstOrDefault(n => n.Id == id);
+                oldNote!.Title = updatedNote.Title;
+                oldNote!.Text = updatedNote.Text;
+                serviceResponse.Data = FakeDB.FirstOrDefault(n => n.Id == id);
+            }
+            catch (System.Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+
+            return serviceResponse;
         }
     }
 }
