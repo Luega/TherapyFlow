@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using therapyFlow.Modules.Notes.Model;
 
 namespace therapyFlow.Modules.Notes
 {
@@ -26,6 +27,18 @@ namespace therapyFlow.Modules.Notes
         public ActionResult<NotesModel> GetOne(int id)
         {
             return Ok(FakeDB.FirstOrDefault(n => n.Id == id));
+        }
+
+        [HttpPost]
+        public ActionResult<NotesModel> CreateNote(RequestPOST_NotesModel newNote)
+        {
+            NotesModel note = new NotesModel { 
+                Id = FakeDB.Max(n => n.Id) + 1,
+                title = newNote.title,
+                text = newNote.text,
+             };
+            FakeDB.Add(note);
+            return Ok(note);
         }
     }
 }
