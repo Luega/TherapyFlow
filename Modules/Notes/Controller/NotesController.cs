@@ -53,11 +53,24 @@ namespace therapyFlow.Modules.Notes
             {
                 return NotFound();
             }
-            
+
             NotesModel ?oldNote = FakeDB.FirstOrDefault(n => n.Id == id);
             oldNote!.title = newNote.title;
             oldNote!.text = newNote.text;
             return Ok(FakeDB.FirstOrDefault(n => n.Id == id));
+        }
+
+        [HttpDelete]
+        public ActionResult<NotesModel> DeleteNote(int id)
+        {
+            if (FakeDB.FirstOrDefault(n => n.Id == id) is null)
+            {
+                return NotFound();
+            }
+
+            FakeDB.Remove(FakeDB.FirstOrDefault(n => n.Id == id)!);
+
+            return Ok($"Note with Id {id} deleted");
         }
     }
 }
