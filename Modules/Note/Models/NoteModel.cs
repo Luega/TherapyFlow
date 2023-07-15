@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace therapyFlow.Modules.Notes
+namespace therapyFlow.Modules.Note
 {
-    public class NotesModel
+    public class NoteModel
     {
         public int Id { set; get; }
         public string title { set; get; } = "";
