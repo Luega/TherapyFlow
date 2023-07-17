@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace therapyFlow.Modules.Note
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/notes")]
     public class NoteController : ControllerBase
     {
         private readonly INoteService _noteService;
