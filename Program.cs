@@ -4,6 +4,7 @@ using therapyFlow.Modules.Note;
 using therapyFlow.Modules.Note.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+DotNetEnv.Env.Load();
 
 // Add services to the container.
 
@@ -14,7 +15,7 @@ builder.Services.AddSwaggerGen();
 
 // DB context injection
 builder.Services.AddDbContext<NoteContext>(options => 
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(System.Environment.GetEnvironmentVariable("CONNECTION_STRING")));
 
 // Service Injection
 builder.Services.AddScoped<INoteService, NoteService>();
