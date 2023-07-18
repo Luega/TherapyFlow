@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using therapyFlow.Data;
 using therapyFlow.Modules.Note;
 using therapyFlow.Modules.Note.Services;
 
@@ -9,6 +11,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// DB context injection
+builder.Services.AddDbContext<NoteContext>(options => 
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Service Injection
 builder.Services.AddScoped<INoteService, NoteService>();

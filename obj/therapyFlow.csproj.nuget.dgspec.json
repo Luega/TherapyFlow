@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\therapyFlow\\therapyFlow.csproj": {}
+    "C:\\therapyFlow\\therapyFlow.csproj": {}
   },
   "projects": {
-    "c:\\therapyFlow\\therapyFlow.csproj": {
+    "C:\\therapyFlow\\therapyFlow.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\therapyFlow\\therapyFlow.csproj",
+        "projectUniqueName": "C:\\therapyFlow\\therapyFlow.csproj",
         "projectName": "therapyFlow",
-        "projectPath": "c:\\therapyFlow\\therapyFlow.csproj",
+        "projectPath": "C:\\therapyFlow\\therapyFlow.csproj",
         "packagesPath": "C:\\Users\\Luca Martinelli\\.nuget\\packages\\",
-        "outputPath": "c:\\therapyFlow\\obj\\",
+        "outputPath": "C:\\therapyFlow\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Luca Martinelli\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -21,6 +21,8 @@
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\sdk\\7.0.305\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -42,6 +44,22 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.9, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
