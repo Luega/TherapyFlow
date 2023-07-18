@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using therapyFlow.Data;
 using therapyFlow.Modules.Common.Models;
 
 namespace therapyFlow.Modules.Note.Services
@@ -13,6 +14,14 @@ namespace therapyFlow.Modules.Note.Services
             new NoteModel{ Id = 1, Title = "Test2", Text = "Text2" },
             new NoteModel{ Id = 2, Title = "Test3", Text = "Text3" }
         };
+
+        private readonly NoteContext _context;
+
+        public NoteService(NoteContext context)
+        {
+            _context = context;
+        }
+
         public ServiceResponseModel<NoteModel> CreateNote(Request_NoteModel newNote)
         {
             ServiceResponseModel<NoteModel> serviceResponse = new ServiceResponseModel<NoteModel>();
