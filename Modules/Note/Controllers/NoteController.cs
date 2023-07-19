@@ -17,7 +17,7 @@ namespace therapyFlow.Modules.Note
         }
 
         [HttpGet]
-        public ActionResult<List<NoteModel>> Get()
+        public ActionResult<List<NoteModel>> GetAll()
         {
             return Ok(_noteService.GetAll());
         }
@@ -34,13 +34,13 @@ namespace therapyFlow.Modules.Note
             return Ok(_noteService.CreateNote(newNote));
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public ActionResult<NoteModel> UpdateNote(int id, Request_NoteModel updatedNote)
         {
             return Ok(_noteService.UpdateNote(id, updatedNote));
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public ActionResult<NoteModel> DeleteNote(int id)
         {
             return Ok(_noteService.DeleteNote(id));
