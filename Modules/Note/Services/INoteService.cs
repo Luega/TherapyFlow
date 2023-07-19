@@ -8,11 +8,11 @@ namespace therapyFlow.Modules.Note
 {
     public interface INoteService
     {
-         ServiceResponseModel<List<NoteModel>> GetAll();
-         ServiceResponseModel<NoteModel> GetOne(int id);
-         ServiceResponseModel<NoteModel> CreateNote(Request_NoteModel newNote);
-         ServiceResponseModel<NoteModel> UpdateNote(int id, Request_NoteModel updatedNote);
-         ServiceResponseModel<string>? DeleteNote(int id);
+        Task<ServiceResponseModel<List<NoteModel>>> GetAll();
+        Task<ServiceResponseModel<NoteModel>> GetOne(int id);
+        Task<ServiceResponseModel<NoteModel>> CreateNote(Request_NoteModel newNote);
+        Task<ServiceResponseModel<NoteModel>> UpdateNote(int id, Request_NoteModel updatedNote);
+        Task<ServiceResponseModel<string>>? DeleteNote(int id);
 
     }
 }
