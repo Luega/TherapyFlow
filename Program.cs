@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using therapyFlow.Data;
+using therapyFlow.Modules.Management.Services;
 using therapyFlow.Modules.Note;
 using therapyFlow.Modules.Note.Services;
 
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<NoteContext>(options =>
 
 // Service Injection
 builder.Services.AddScoped<INoteService, NoteService>();
+builder.Services.AddScoped<IClientService, ClientService>();
 
 // CORS
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
