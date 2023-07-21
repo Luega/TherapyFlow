@@ -9,5 +9,6 @@ namespace therapyFlow.Modules.Note
     {
         public string Title { set; get; } = "";
         public string Text { set; get; } = "";
+        public int ClientId { get; set; }
     }
 }

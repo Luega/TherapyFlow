@@ -5,7 +5,6 @@ using therapyFlow.Modules.Note;
 using therapyFlow.Modules.Note.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-DotNetEnv.Env.Load();
 
 // Add services to the container.
 

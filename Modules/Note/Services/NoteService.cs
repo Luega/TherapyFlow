@@ -21,23 +21,40 @@ namespace therapyFlow.Modules.Note.Services
         {
             ServiceResponseModel<NoteModel> serviceResponse = new ServiceResponseModel<NoteModel>();
 
-            var lastId = await _context.Notes.OrderByDescending(note => note.Id).FirstOrDefaultAsync();
-            int nextId = 1;
-            if (lastId != null)
+            try
             {
-                nextId = lastId.Id + 1;
+                var client = await _context.Clients.FindAsync(newNote.ClientId);
+                if (client is null)
+                {
+                    throw new Exception($"ClientId {newNote.ClientId} not found.");
+                }
+
+                var lastId = await _context.Notes.OrderByDescending(note => note.Id).FirstOrDefaultAsync();
+                int nextId = 1;
+                if (lastId != null)
+                {
+                    nextId = lastId.Id + 1;
+                }
+
+                NoteModel note = new NoteModel
+                {
+                    Id = nextId,
+                    Title = newNote.Title,
+                    Text = newNote.Text,
+                    ClientId = newNote.ClientId,
+                };
+                
+                _context.Notes.Add(note);
+                await _context.SaveChangesAsync();
+
+                serviceResponse.Data = await _context.Notes.FindAsync(nextId);
+
             }
-
-            NoteModel note = new NoteModel { 
-                Id = nextId,
-                Title = newNote.Title,
-                Text = newNote.Text,
-             };
-            
-            _context.Notes.Add(note);
-            await _context.SaveChangesAsync();
-
-            serviceResponse.Data = await _context.Notes.FindAsync(nextId);
+            catch (System.Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
 
             return serviceResponse;
         }
@@ -105,6 +122,12 @@ namespace therapyFlow.Modules.Note.Services
             
             try
             {
+                var client = await _context.Clients.FindAsync(updatedNote.ClientId);
+                if (client is null)
+                {
+                    throw new Exception($"ClientId {updatedNote.ClientId} not found.");
+                }
+
                 var noteFromDB = await _context.Notes.FindAsync(id);
                 if (noteFromDB is null)
                 {
@@ -113,6 +136,7 @@ namespace therapyFlow.Modules.Note.Services
 
                 noteFromDB.Title = updatedNote.Title;
                 noteFromDB.Text = updatedNote.Text;
+                noteFromDB.ClientId = updatedNote.ClientId;
                 await _context.SaveChangesAsync();
 
                 serviceResponse.Data = await _context.Notes.FindAsync(id);
