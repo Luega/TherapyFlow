@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen();
 
 // DB context injection
 builder.Services.AddDbContext<DataContext>(options => 
-    options.UseNpgsql(System.Environment.GetEnvironmentVariable("CONNECTION_STRING")));
+    options.UseNpgsql(builder.Configuration["ConnectionStrings:DefaultConnection"]));
 
 // Service Injection
 builder.Services.AddScoped<INoteService, NoteService>();
@@ -29,7 +29,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy  =>
                       {
-                          policy.WithOrigins(System.Environment.GetEnvironmentVariable("POLICY_URL")!)
+                          policy.WithOrigins(builder.Configuration["Policy_url"]!)
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                       });
