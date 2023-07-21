@@ -8,9 +8,9 @@ using therapyFlow.Modules.Note;
 
 namespace therapyFlow.Data
 {
-    public class NoteContext : DbContext
+    public class DataContext : DbContext
     {
-        public NoteContext(DbContextOptions<NoteContext> options) : base(options)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
 

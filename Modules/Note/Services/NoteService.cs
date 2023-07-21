@@ -10,15 +10,9 @@ namespace therapyFlow.Modules.Note.Services
 {
     public class NoteService : INoteService
     {
-        private static List<NoteModel> FakeDB = new List<NoteModel> {
-            new NoteModel{ Id = 0, Title = "Test", Text = "Text" },
-            new NoteModel{ Id = 1, Title = "Test2", Text = "Text2" },
-            new NoteModel{ Id = 2, Title = "Test3", Text = "Text3" }
-        };
+        private readonly DataContext _context;
 
-        private readonly NoteContext _context;
-
-        public NoteService(NoteContext context)
+        public NoteService(DataContext context)
         {
             _context = context;
         }

@@ -10,8 +10,8 @@ using therapyFlow.Data;
 
 namespace therapyFlow.Migrations
 {
-    [DbContext(typeof(NoteContext))]
-    [Migration("20230718092844_InitialCreate")]
+    [DbContext(typeof(DataContext))]
+    [Migration("20230721072324_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -23,6 +23,27 @@ namespace therapyFlow.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("therapyFlow.Modules.Management.Models.ClientModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clients");
+                });
 
             modelBuilder.Entity("therapyFlow.Modules.Note.NoteModel", b =>
                 {

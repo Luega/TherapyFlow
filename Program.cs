@@ -15,7 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // DB context injection
-builder.Services.AddDbContext<NoteContext>(options => 
+builder.Services.AddDbContext<DataContext>(options => 
     options.UseNpgsql(System.Environment.GetEnvironmentVariable("CONNECTION_STRING")));
 
 // Service Injection
