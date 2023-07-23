@@ -17,9 +17,9 @@ namespace therapyFlow.Modules.Note
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<NoteModel>>> GetAll()
+        public async Task<ActionResult<List<NoteModel>>> GetAll(int clientId)
         {
-            return Ok(await _noteService.GetAll());
+            return Ok(await _noteService.GetAll(clientId));
         }
 
         [HttpGet("{id}")]

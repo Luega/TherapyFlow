@@ -85,10 +85,25 @@ namespace therapyFlow.Modules.Note.Services
             return serviceResponse;
         }
 
-        public async Task<ServiceResponseModel<List<NoteModel>>> GetAll()
+        public async Task<ServiceResponseModel<List<NoteModel>>> GetAll(int clientId)
         {
             ServiceResponseModel<List<NoteModel>> serviceResponse = new ServiceResponseModel<List<NoteModel>>();
-            serviceResponse.Data = await _context.Notes.ToListAsync();
+
+            try
+            {
+                Console.WriteLine(clientId);
+                var clientFromDB = await _context.Clients.FindAsync(clientId);
+                if (clientFromDB is null)
+                {
+                    throw new Exception($"ClientId {clientId} not found.");
+                }
+                serviceResponse.Data = await _context.Notes.Where(note => note.ClientId == clientId).ToListAsync();
+            }
+            catch (System.Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
             
             return serviceResponse;
         }

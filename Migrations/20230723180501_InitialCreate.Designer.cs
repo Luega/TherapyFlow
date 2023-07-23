@@ -11,7 +11,7 @@ using therapyFlow.Data;
 namespace therapyFlow.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230721134843_InitialCreate")]
+    [Migration("20230723180501_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -66,25 +66,7 @@ namespace therapyFlow.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
-
                     b.ToTable("Notes");
-                });
-
-            modelBuilder.Entity("therapyFlow.Modules.Note.NoteModel", b =>
-                {
-                    b.HasOne("therapyFlow.Modules.Management.Models.ClientModel", "Client")
-                        .WithMany("Posts")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Client");
-                });
-
-            modelBuilder.Entity("therapyFlow.Modules.Management.Models.ClientModel", b =>
-                {
-                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }

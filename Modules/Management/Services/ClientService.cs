@@ -43,7 +43,7 @@ namespace therapyFlow.Modules.Management.Services
             return serviceResponse;
         }
 
-        public async Task<ServiceResponseModel<string>>? DeleteClient(int id)
+        public async Task<ServiceResponseModel<string>> DeleteClient(int id)
         {
             ServiceResponseModel<String> serviceResponse = new ServiceResponseModel<String>();
 
@@ -55,6 +55,11 @@ namespace therapyFlow.Modules.Management.Services
                     throw new Exception($"Id {id} not found.");
                 }
 
+                var clientNotes = await _context.Notes.Where(note => note.ClientId == id).ToListAsync();
+                if (!(clientNotes is null))
+                {
+                    _context.Notes.RemoveRange(clientNotes);
+                }
                 _context.Clients.Remove(clientFromDB);
                 await _context.SaveChangesAsync();
             }
