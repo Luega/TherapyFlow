@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using therapyFlow.Modules.Management.Models;
+using therapyFlow.Modules.Note;
+using therapyFlow.Modules.Note.Mapper;
+using therapyFlow.Modules.Note.Models;
 
 namespace therapyFlow.Modules.Management.Mappers
 {
@@ -24,8 +27,18 @@ namespace therapyFlow.Modules.Management.Mappers
                 Id = client.Id,
                 FirstName = client.FirstName,
                 LastName = client.LastName,
-                Notes = client.Notes,
+                Notes = NoteMapperHelper(client.Notes),
             };
+        }
+        private static List<NoteModelDTO> NoteMapperHelper(this List<NoteModel> clientNotes)
+        {
+            List<NoteModelDTO> clientNotesDTO = new();
+            foreach (NoteModel note in clientNotes)
+            {
+                clientNotesDTO.Add(note.ToNoteModelDTO());
+            }
+
+            return clientNotesDTO;
         }
     }
 }
