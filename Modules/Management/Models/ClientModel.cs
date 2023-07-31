@@ -11,5 +11,6 @@ namespace therapyFlow.Modules.Management.Models
         public int Id { set; get; }
         public string FirstName { set; get; } = "";
         public string LastName { set; get; } = "";
+        public List<NoteModel> Notes { set; get; } = new List<NoteModel>();
     }
 }

@@ -77,7 +77,7 @@ namespace therapyFlow.Modules.Management.Services
         public async Task<ServiceResponseModel<List<ClientModel>>> GetAll()
         {
             ServiceResponseModel<List<ClientModel>> serviceResponse = new ServiceResponseModel<List<ClientModel>>();
-            serviceResponse.Data = await _context.Clients.ToListAsync();
+            serviceResponse.Data = await _context.Clients.Include("Notes").ToListAsync();
             
             return serviceResponse;
         }

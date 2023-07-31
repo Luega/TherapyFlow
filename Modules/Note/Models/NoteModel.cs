@@ -11,6 +11,7 @@ namespace therapyFlow.Modules.Note
         public int Id { set; get; }
         public string Title { set; get; } = "";
         public string Text { set; get; } = "";
-        public int ClientId { get; set; }
-    }
+        public int? ClientId { get; set; }
+        public ClientModel? Client { get; set; }
+}
 }

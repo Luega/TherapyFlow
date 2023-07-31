@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using therapyFlow.Data;
 using therapyFlow.Modules.Management.Services;
@@ -20,6 +21,10 @@ builder.Services.AddDbContext<DataContext>(options =>
 // Service Injection
 builder.Services.AddScoped<INoteService, NoteService>();
 builder.Services.AddScoped<IClientService, ClientService>();
+
+// Ignore object cycle
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 // CORS
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
