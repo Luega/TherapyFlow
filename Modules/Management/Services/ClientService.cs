@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using therapyFlow.Data;
 using therapyFlow.Modules.Common.Models;
+using therapyFlow.Modules.Management.Mappers;
 using therapyFlow.Modules.Management.Models;
 
 namespace therapyFlow.Modules.Management.Services
@@ -22,23 +23,12 @@ namespace therapyFlow.Modules.Management.Services
         {
             ServiceResponseModel<ClientModel> serviceResponse = new ServiceResponseModel<ClientModel>();
 
-            var lastId = await _context.Clients.OrderByDescending(client => client.Id).FirstOrDefaultAsync();
-            int nextId = 1;
-            if (lastId != null)
-            {
-                nextId = lastId.Id + 1;
-            }
+            ClientModel client = newClient.ToClientModel();
 
-            ClientModel client = new ClientModel { 
-                Id = nextId,
-                FirstName = newClient.FirstName,
-                LastName = newClient.LastName,
-             };
-            
             _context.Clients.Add(client);
             await _context.SaveChangesAsync();
 
-            serviceResponse.Data = await _context.Clients.FindAsync(nextId);
+            serviceResponse.Data = await _context.Clients.FindAsync(client.Id);
 
             return serviceResponse;
         }
