@@ -50,7 +50,7 @@ namespace therapyFlow.Modules.Note.Services
 
         public async Task<ServiceResponseModel<string>> DeleteNote(Guid id)
         {
-            ServiceResponseModel<String> serviceResponse = new ServiceResponseModel<String>();
+            ServiceResponseModel<String> serviceResponse = new();
 
             try
             {
@@ -76,7 +76,7 @@ namespace therapyFlow.Modules.Note.Services
 
         public async Task<ServiceResponseModel<NoteModelDTO>> GetOne(Guid id)
         {
-            ServiceResponseModel<NoteModelDTO> serviceResponse = new ServiceResponseModel<NoteModelDTO>();
+            ServiceResponseModel<NoteModelDTO> serviceResponse = new();
             
             try
             {

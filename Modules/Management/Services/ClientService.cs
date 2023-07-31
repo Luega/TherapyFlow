@@ -19,23 +19,23 @@ namespace therapyFlow.Modules.Management.Services
             _context = context;
         }
 
-        public async Task<ServiceResponseModel<ClientModel>> CreateClient(Request_ClientModel newClient)
+        public async Task<ServiceResponseModel<ClientModelDTO>> CreateClient(Request_ClientModel newClient)
         {
-            ServiceResponseModel<ClientModel> serviceResponse = new ServiceResponseModel<ClientModel>();
+            ServiceResponseModel<ClientModelDTO> serviceResponse = new();
 
             ClientModel client = newClient.ToClientModel();
 
             _context.Clients.Add(client);
             await _context.SaveChangesAsync();
 
-            serviceResponse.Data = await _context.Clients.FindAsync(client.Id);
+            serviceResponse.Data = client.ToClientModelDTO();
 
             return serviceResponse;
         }
 
         public async Task<ServiceResponseModel<string>> DeleteClient(Guid id)
         {
-            ServiceResponseModel<String> serviceResponse = new ServiceResponseModel<String>();
+            ServiceResponseModel<String> serviceResponse = new();
 
             try
             {
@@ -59,18 +59,39 @@ namespace therapyFlow.Modules.Management.Services
             return serviceResponse;
         }
 
-        public async Task<ServiceResponseModel<List<ClientModel>>> GetAll()
+        public async Task<ServiceResponseModel<List<ClientModelDTO>>> GetAll()
         {
-            ServiceResponseModel<List<ClientModel>> serviceResponse = new ServiceResponseModel<List<ClientModel>>();
-            serviceResponse.Data = await _context.Clients.Include("Notes").ToListAsync();
+            ServiceResponseModel<List<ClientModelDTO>> serviceResponse = new();
+
+            try
+            {
+                var clients = await _context.Clients.Include("Notes").ToListAsync();
+                if (clients is null)
+                {
+                    throw new Exception("Something went wrong.");
+                }
+
+                List<ClientModelDTO> clientsDTO = new();
+                foreach (ClientModel client in clients)
+                {
+                    clientsDTO.Add(client.ToClientModelDTO());
+                }
+
+                serviceResponse.Data = clientsDTO;
+            }
+            catch (System.Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
             
             return serviceResponse;
         }
 
-        public async Task<ServiceResponseModel<ClientModel>> GetOne(Guid id)
+        public async Task<ServiceResponseModel<ClientModelDTO>> GetOne(Guid id)
         {
-            ServiceResponseModel<ClientModel> serviceResponse = new ServiceResponseModel<ClientModel>();
-            
+            ServiceResponseModel<ClientModelDTO> serviceResponse = new();
+
             try
             {
                 var clientFromDB = await _context.Clients.FindAsync(id);
@@ -79,7 +100,7 @@ namespace therapyFlow.Modules.Management.Services
                     throw new Exception($"Id {id} not found.");
                 }
 
-                serviceResponse.Data = clientFromDB;
+                serviceResponse.Data = clientFromDB.ToClientModelDTO();
             }
             catch (System.Exception ex)
             {
@@ -90,10 +111,10 @@ namespace therapyFlow.Modules.Management.Services
             return serviceResponse;
         }
 
-        public async Task<ServiceResponseModel<ClientModel>> UpdateClient(Guid id, Request_ClientModel updatedClient)
+        public async Task<ServiceResponseModel<ClientModelDTO>> UpdateClient(Guid id, Request_ClientModel updatedClient)
         {
-            ServiceResponseModel<ClientModel> serviceResponse = new ServiceResponseModel<ClientModel>();
-            
+            ServiceResponseModel<ClientModelDTO> serviceResponse = new();    
+                
             try
             {
                 var clientFromDB = await _context.Clients.FindAsync(id);
@@ -106,7 +127,7 @@ namespace therapyFlow.Modules.Management.Services
                 clientFromDB.LastName = updatedClient.LastName;
                 await _context.SaveChangesAsync();
 
-                serviceResponse.Data = await _context.Clients.FindAsync(id);
+                serviceResponse.Data = clientFromDB.ToClientModelDTO();
             }
             catch (System.Exception ex)
             {

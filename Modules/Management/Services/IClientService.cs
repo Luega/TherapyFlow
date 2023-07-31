@@ -9,10 +9,10 @@ namespace therapyFlow.Modules.Management.Services
 {
     public interface IClientService
     {
-        Task<ServiceResponseModel<List<ClientModel>>> GetAll();
-        Task<ServiceResponseModel<ClientModel>> GetOne(Guid id);
-        Task<ServiceResponseModel<ClientModel>> CreateClient(Request_ClientModel newClient);
-        Task<ServiceResponseModel<ClientModel>> UpdateClient(Guid id, Request_ClientModel updatedClient);
+        Task<ServiceResponseModel<List<ClientModelDTO>>> GetAll();
+        Task<ServiceResponseModel<ClientModelDTO>> GetOne(Guid id);
+        Task<ServiceResponseModel<ClientModelDTO>> CreateClient(Request_ClientModel newClient);
+        Task<ServiceResponseModel<ClientModelDTO>> UpdateClient(Guid id, Request_ClientModel updatedClient);
         Task<ServiceResponseModel<string>>? DeleteClient(Guid id);
     }
 }

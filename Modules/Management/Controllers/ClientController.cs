@@ -19,31 +19,31 @@ namespace therapyFlow.Modules.Management.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ClientModel>>> GetAll()
+        public async Task<ActionResult<List<ClientModelDTO>>> GetAll()
         {
             return Ok(await _clientService.GetAll());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ClientModel>> GetOne(Guid id)
+        public async Task<ActionResult<ClientModelDTO>> GetOne(Guid id)
         {
             return Ok(await _clientService.GetOne(id));
         }
 
         [HttpPost]
-        public async Task<ActionResult<ClientModel>> CreateClient(Request_ClientModel newClient)
+        public async Task<ActionResult<ClientModelDTO>> CreateClient(Request_ClientModel newClient)
         {
             return Ok(await _clientService.CreateClient(newClient));
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<ClientModel>> UpdateClient(Guid id, Request_ClientModel updatedClient)
+        public async Task<ActionResult<ClientModelDTO>> UpdateClient(Guid id, Request_ClientModel updatedClient)
         {
             return Ok(await _clientService.UpdateClient(id, updatedClient));
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ClientModel>> DeleteClient(Guid id)
+        public async Task<ActionResult<String>> DeleteClient(Guid id)
         {
             return Ok(await _clientService.DeleteClient(id)!);
         }

@@ -35,7 +35,7 @@ namespace therapyFlow.Modules.Note
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<NoteModel>> DeleteNote(Guid id)
+        public async Task<ActionResult<String>> DeleteNote(Guid id)
         {
             return Ok(await _noteService.DeleteNote(id)!);
         }
