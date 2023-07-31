@@ -17,5 +17,15 @@ namespace therapyFlow.Modules.Management.Mappers
                 LastName = req.LastName,
             };
         }
+        public static ClientModelDTO ToClientModelDTO(this ClientModel client)
+        {
+            return new ClientModelDTO
+            {
+                Id = client.Id,
+                FirstName = client.FirstName,
+                LastName = client.LastName,
+                Notes = client.Notes,
+            };
+        }
     }
 }
