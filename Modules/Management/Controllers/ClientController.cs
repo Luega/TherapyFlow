@@ -25,7 +25,7 @@ namespace therapyFlow.Modules.Management.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ClientModel>> GetOne(int id)
+        public async Task<ActionResult<ClientModel>> GetOne(Guid id)
         {
             return Ok(await _clientService.GetOne(id));
         }
@@ -37,13 +37,13 @@ namespace therapyFlow.Modules.Management.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<ClientModel>> UpdateClient(int id, Request_ClientModel updatedClient)
+        public async Task<ActionResult<ClientModel>> UpdateClient(Guid id, Request_ClientModel updatedClient)
         {
             return Ok(await _clientService.UpdateClient(id, updatedClient));
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ClientModel>> DeleteClient(int id)
+        public async Task<ActionResult<ClientModel>> DeleteClient(Guid id)
         {
             return Ok(await _clientService.DeleteClient(id)!);
         }

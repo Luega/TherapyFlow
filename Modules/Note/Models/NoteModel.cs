@@ -8,10 +8,10 @@ namespace therapyFlow.Modules.Note
 {
     public class NoteModel
     {
-        public int Id { set; get; }
+        public Guid Id { set; get; }
         public string Title { set; get; } = "";
         public string Text { set; get; } = "";
-        public int? ClientId { get; set; }
-        public ClientModel? Client { get; set; }
-}
+        public Guid ClientId { get; set; }
+        public ClientModel Client { get; set; } = null!;
+    }
 }

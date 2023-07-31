@@ -16,14 +16,8 @@ namespace therapyFlow.Modules.Note
             _noteService = noteService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<NoteModel>>> GetAll(int clientId)
-        {
-            return Ok(await _noteService.GetAll(clientId));
-        }
-
         [HttpGet("{id}")]
-        public async Task<ActionResult<NoteModel>> GetOne(int id)
+        public async Task<ActionResult<NoteModel>> GetOne(Guid id)
         {
             return Ok(await _noteService.GetOne(id));
         }
@@ -35,13 +29,13 @@ namespace therapyFlow.Modules.Note
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<NoteModel>> UpdateNote(int id, Request_NoteModel updatedNote)
+        public async Task<ActionResult<NoteModel>> UpdateNote(Guid id, Request_NoteModel updatedNote)
         {
             return Ok(await _noteService.UpdateNote(id, updatedNote));
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<NoteModel>> DeleteNote(int id)
+        public async Task<ActionResult<NoteModel>> DeleteNote(Guid id)
         {
             return Ok(await _noteService.DeleteNote(id)!);
         }

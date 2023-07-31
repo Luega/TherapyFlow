@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using therapyFlow.Data;
 using therapyFlow.Modules.Common.Models;
+using therapyFlow.Modules.Note.Mapper;
+using therapyFlow.Modules.Note.Models;
 
 namespace therapyFlow.Modules.Note.Services
 {
@@ -17,9 +19,9 @@ namespace therapyFlow.Modules.Note.Services
             _context = context;
         }
 
-        public async Task<ServiceResponseModel<NoteModel>> CreateNote(Request_NoteModel newNote)
+        public async Task<ServiceResponseModel<NoteModelDTO>> CreateNote(Request_NoteModel newNote)
         {
-            ServiceResponseModel<NoteModel> serviceResponse = new ServiceResponseModel<NoteModel>();
+            ServiceResponseModel<NoteModelDTO> serviceResponse = new();
 
             try
             {
@@ -29,25 +31,12 @@ namespace therapyFlow.Modules.Note.Services
                     throw new Exception($"ClientId {newNote.ClientId} not found.");
                 }
 
-                var lastId = await _context.Notes.OrderByDescending(note => note.Id).FirstOrDefaultAsync();
-                int nextId = 1;
-                if (lastId != null)
-                {
-                    nextId = lastId.Id + 1;
-                }
+                NoteModel note = newNote.ToNoteModel();
 
-                NoteModel note = new NoteModel
-                {
-                    Id = nextId,
-                    Title = newNote.Title,
-                    Text = newNote.Text,
-                    ClientId = newNote.ClientId,
-                };
-                
                 _context.Notes.Add(note);
                 await _context.SaveChangesAsync();
 
-                serviceResponse.Data = await _context.Notes.FindAsync(nextId);
+                serviceResponse.Data = note.ToNoteModelDTO();
 
             }
             catch (System.Exception ex)
@@ -59,7 +48,7 @@ namespace therapyFlow.Modules.Note.Services
             return serviceResponse;
         }
 
-        public async Task<ServiceResponseModel<string>> DeleteNote(int id)
+        public async Task<ServiceResponseModel<string>> DeleteNote(Guid id)
         {
             ServiceResponseModel<String> serviceResponse = new ServiceResponseModel<String>();
 
@@ -85,32 +74,9 @@ namespace therapyFlow.Modules.Note.Services
             return serviceResponse;
         }
 
-        public async Task<ServiceResponseModel<List<NoteModel>>> GetAll(int clientId)
+        public async Task<ServiceResponseModel<NoteModelDTO>> GetOne(Guid id)
         {
-            ServiceResponseModel<List<NoteModel>> serviceResponse = new ServiceResponseModel<List<NoteModel>>();
-
-            try
-            {
-                Console.WriteLine(clientId);
-                var clientFromDB = await _context.Clients.FindAsync(clientId);
-                if (clientFromDB is null)
-                {
-                    throw new Exception($"ClientId {clientId} not found.");
-                }
-                serviceResponse.Data = await _context.Notes.Where(note => note.ClientId == clientId).ToListAsync();
-            }
-            catch (System.Exception ex)
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Message = ex.Message;
-            }
-            
-            return serviceResponse;
-        }
-
-        public async Task<ServiceResponseModel<NoteModel>> GetOne(int id)
-        {
-            ServiceResponseModel<NoteModel> serviceResponse = new ServiceResponseModel<NoteModel>();
+            ServiceResponseModel<NoteModelDTO> serviceResponse = new ServiceResponseModel<NoteModelDTO>();
             
             try
             {
@@ -120,7 +86,7 @@ namespace therapyFlow.Modules.Note.Services
                     throw new Exception($"Id {id} not found.");
                 }
 
-                serviceResponse.Data = noteFromDB;
+                serviceResponse.Data = noteFromDB.ToNoteModelDTO();
             }
             catch (System.Exception ex)
             {
@@ -131,9 +97,9 @@ namespace therapyFlow.Modules.Note.Services
             return serviceResponse;
         }
 
-        public  async Task<ServiceResponseModel<NoteModel>> UpdateNote(int id, Request_NoteModel updatedNote)
+        public  async Task<ServiceResponseModel<NoteModelDTO>> UpdateNote(Guid id, Request_NoteModel updatedNote)
         {
-            ServiceResponseModel<NoteModel> serviceResponse = new ServiceResponseModel<NoteModel>();
+            ServiceResponseModel<NoteModelDTO> serviceResponse = new();
             
             try
             {
@@ -154,7 +120,7 @@ namespace therapyFlow.Modules.Note.Services
                 noteFromDB.ClientId = updatedNote.ClientId;
                 await _context.SaveChangesAsync();
 
-                serviceResponse.Data = await _context.Notes.FindAsync(id);
+                serviceResponse.Data = noteFromDB.ToNoteModelDTO();
             }
             catch (System.Exception ex)
             {

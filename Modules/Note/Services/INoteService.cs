@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using therapyFlow.Modules.Common.Models;
+using therapyFlow.Modules.Note.Models;
 
 namespace therapyFlow.Modules.Note
 {
     public interface INoteService
     {
-        Task<ServiceResponseModel<List<NoteModel>>> GetAll(int clientId);
-        Task<ServiceResponseModel<NoteModel>> GetOne(int id);
-        Task<ServiceResponseModel<NoteModel>> CreateNote(Request_NoteModel newNote);
-        Task<ServiceResponseModel<NoteModel>> UpdateNote(int id, Request_NoteModel updatedNote);
-        Task<ServiceResponseModel<string>>? DeleteNote(int id);
+        Task<ServiceResponseModel<NoteModelDTO>> GetOne(Guid id);
+        Task<ServiceResponseModel<NoteModelDTO>> CreateNote(Request_NoteModel newNote);
+        Task<ServiceResponseModel<NoteModelDTO>> UpdateNote(Guid id, Request_NoteModel updatedNote);
+        Task<ServiceResponseModel<string>> DeleteNote(Guid id);
 
     }
 }
