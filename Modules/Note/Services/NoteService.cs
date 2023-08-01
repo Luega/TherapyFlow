@@ -20,13 +20,15 @@ namespace therapyFlow.Modules.Note.Services
 
             try
             {
-                var client = await _context.Customers.FindAsync(newNote.CustomerId);
-                if (client is null)
+                var customer = await _context.Customers.FindAsync(newNote.CustomerId);
+                if (customer is null)
                 {
-                    throw new Exception($"ClientId {newNote.CustomerId} not found.");
+                    throw new Exception($"CustomerId {newNote.CustomerId} not found.");
                 }
 
                 NoteModel note = newNote.ToNoteModel();
+
+                Console.WriteLine(note);
 
                 _context.Notes.Add(note);
                 await _context.SaveChangesAsync();
@@ -112,7 +114,7 @@ namespace therapyFlow.Modules.Note.Services
 
                 noteFromDB.Title = updatedNote.Title;
                 noteFromDB.Text = updatedNote.Text;
-                noteFromDB.ClientId = updatedNote.CustomerId;
+                noteFromDB.CustomerId = updatedNote.CustomerId;
                 await _context.SaveChangesAsync();
 
                 serviceResponse.Data = noteFromDB.ToNoteModelDTO();

@@ -12,7 +12,7 @@ using therapyFlow.Data;
 namespace therapyFlow.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230801152414_InitialCreate")]
+    [Migration("20230801155320_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -48,9 +48,6 @@ namespace therapyFlow.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ClientId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("CustomerId")

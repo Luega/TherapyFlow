@@ -7,7 +7,7 @@ namespace therapyFlow.Modules.Note
         public Guid Id { set; get; }
         public string Title { set; get; } = "";
         public string Text { set; get; } = "";
-        public Guid ClientId { get; set; }
+        public Guid CustomerId { get; set; }
         public CustomerModel Customer { get; set; } = null!;
     }
 }
