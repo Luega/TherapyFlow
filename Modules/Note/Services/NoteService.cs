@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using therapyFlow.Data;
 using therapyFlow.Modules.Common.Models;
 using therapyFlow.Modules.Note.Mapper;
@@ -25,10 +20,10 @@ namespace therapyFlow.Modules.Note.Services
 
             try
             {
-                var client = await _context.Clients.FindAsync(newNote.ClientId);
+                var client = await _context.Customers.FindAsync(newNote.CustomerId);
                 if (client is null)
                 {
-                    throw new Exception($"ClientId {newNote.ClientId} not found.");
+                    throw new Exception($"ClientId {newNote.CustomerId} not found.");
                 }
 
                 NoteModel note = newNote.ToNoteModel();
@@ -103,10 +98,10 @@ namespace therapyFlow.Modules.Note.Services
             
             try
             {
-                var client = await _context.Clients.FindAsync(updatedNote.ClientId);
+                var client = await _context.Customers.FindAsync(updatedNote.CustomerId);
                 if (client is null)
                 {
-                    throw new Exception($"ClientId {updatedNote.ClientId} not found.");
+                    throw new Exception($"ClientId {updatedNote.CustomerId} not found.");
                 }
 
                 var noteFromDB = await _context.Notes.FindAsync(id);
@@ -117,7 +112,7 @@ namespace therapyFlow.Modules.Note.Services
 
                 noteFromDB.Title = updatedNote.Title;
                 noteFromDB.Text = updatedNote.Text;
-                noteFromDB.ClientId = updatedNote.ClientId;
+                noteFromDB.ClientId = updatedNote.CustomerId;
                 await _context.SaveChangesAsync();
 
                 serviceResponse.Data = noteFromDB.ToNoteModelDTO();

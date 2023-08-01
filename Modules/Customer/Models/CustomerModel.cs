@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using therapyFlow.Modules.Note;
 
-namespace therapyFlow.Modules.Management.Models
+namespace therapyFlow.Modules.Customer.Models
 {
-    public class ClientModel
+    public class CustomerModel
     {
         public Guid Id { set; get; }
         public string FirstName { set; get; } = "";

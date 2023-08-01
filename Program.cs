@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using therapyFlow.Data;
-using therapyFlow.Modules.Management.Services;
+using therapyFlow.Modules.Customer.Services;
 using therapyFlow.Modules.Note;
 using therapyFlow.Modules.Note.Services;
 
@@ -20,7 +20,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 // Service Injection
 builder.Services.AddScoped<INoteService, NoteService>();
-builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 // Ignore object cycle
 builder.Services.AddControllers().AddJsonOptions(x =>

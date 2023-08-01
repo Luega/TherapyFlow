@@ -22,7 +22,7 @@ namespace therapyFlow.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("therapyFlow.Modules.Management.Models.ClientModel", b =>
+            modelBuilder.Entity("therapyFlow.Modules.Customer.Models.CustomerModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -38,7 +38,7 @@ namespace therapyFlow.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("therapyFlow.Modules.Note.NoteModel", b =>
@@ -48,6 +48,9 @@ namespace therapyFlow.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CustomerId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Text")
@@ -60,23 +63,23 @@ namespace therapyFlow.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Notes");
                 });
 
             modelBuilder.Entity("therapyFlow.Modules.Note.NoteModel", b =>
                 {
-                    b.HasOne("therapyFlow.Modules.Management.Models.ClientModel", "Client")
+                    b.HasOne("therapyFlow.Modules.Customer.Models.CustomerModel", "Customer")
                         .WithMany("Notes")
-                        .HasForeignKey("ClientId")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Client");
+                    b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("therapyFlow.Modules.Management.Models.ClientModel", b =>
+            modelBuilder.Entity("therapyFlow.Modules.Customer.Models.CustomerModel", b =>
                 {
                     b.Navigation("Notes");
                 });

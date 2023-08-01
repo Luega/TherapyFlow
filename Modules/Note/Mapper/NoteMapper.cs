@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using therapyFlow.Modules.Note.Models;
 
 namespace therapyFlow.Modules.Note.Mapper
@@ -15,7 +11,7 @@ namespace therapyFlow.Modules.Note.Mapper
                 Id = Guid.NewGuid(),
                 Title = req.Title,
                 Text = req.Text,
-                ClientId = req.ClientId,
+                ClientId = req.CustomerId,
             };
         }
         public static NoteModelDTO ToNoteModelDTO (this NoteModel note)
@@ -25,7 +21,7 @@ namespace therapyFlow.Modules.Note.Mapper
                 Id = note.Id,
                 Title = note.Title,
                 Text = note.Text,
-                ClientId = note.ClientId
+                CustomerId = note.ClientId
             };
         }
     }
