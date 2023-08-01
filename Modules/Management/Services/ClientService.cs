@@ -94,7 +94,7 @@ namespace therapyFlow.Modules.Management.Services
 
             try
             {
-                var clientFromDB = await _context.Clients.FindAsync(id);
+                var clientFromDB = await _context.Clients.Include("Notes").FirstOrDefaultAsync(client => client.Id == id);
                 if (clientFromDB is null)
                 {
                     throw new Exception($"Id {id} not found.");
@@ -117,7 +117,7 @@ namespace therapyFlow.Modules.Management.Services
                 
             try
             {
-                var clientFromDB = await _context.Clients.FindAsync(id);
+                var clientFromDB = await _context.Clients.Include("Notes").FirstOrDefaultAsync(client => client.Id == id);
                 if (clientFromDB is null)
                 {
                     throw new Exception($"Id {id} not found.");
