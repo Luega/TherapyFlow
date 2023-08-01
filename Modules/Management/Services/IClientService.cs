@@ -13,6 +13,6 @@ namespace therapyFlow.Modules.Management.Services
         Task<ServiceResponseModel<ClientModelDTO>> GetOne(Guid id);
         Task<ServiceResponseModel<ClientModelDTO>> CreateClient(Request_ClientModel newClient);
         Task<ServiceResponseModel<ClientModelDTO>> UpdateClient(Guid id, Request_ClientModel updatedClient);
-        Task<ServiceResponseModel<string>>? DeleteClient(Guid id);
+        Task<ServiceResponseModel<string>> DeleteClient(Guid id);
     }
 }

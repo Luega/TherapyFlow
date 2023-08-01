@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using therapyFlow.Modules.Common.Models;
 using therapyFlow.Modules.Management.Models;
 using therapyFlow.Modules.Management.Services;
 
@@ -21,31 +22,61 @@ namespace therapyFlow.Modules.Management.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ClientModelDTO>>> GetAll()
         {
-            return Ok(await _clientService.GetAll());
+            ServiceResponseModel<List<ClientModelDTO>> res = await _clientService.GetAll();
+            if (res.Success == false)
+            {
+                return NotFound(res);
+            }
+
+            return Ok(res);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ClientModelDTO>> GetOne(Guid id)
         {
-            return Ok(await _clientService.GetOne(id));
+            ServiceResponseModel<ClientModelDTO> res = await _clientService.GetOne(id);
+            if (res.Success == false)
+            {
+                return NotFound(res);
+            }
+
+            return Ok(res);
         }
 
         [HttpPost]
         public async Task<ActionResult<ClientModelDTO>> CreateClient(Request_ClientModel newClient)
         {
-            return Ok(await _clientService.CreateClient(newClient));
+            ServiceResponseModel<ClientModelDTO> res = await _clientService.CreateClient(newClient);
+            if (res.Success == false)
+            {
+                return NotFound(res);
+            }
+
+            return Ok(res);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<ClientModelDTO>> UpdateClient(Guid id, Request_ClientModel updatedClient)
         {
-            return Ok(await _clientService.UpdateClient(id, updatedClient));
+            ServiceResponseModel<ClientModelDTO> res = await _clientService.UpdateClient(id, updatedClient);
+            if (res.Success == false)
+            {
+                return NotFound(res);
+            }
+
+            return Ok(res);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<String>> DeleteClient(Guid id)
         {
-            return Ok(await _clientService.DeleteClient(id)!);
+            ServiceResponseModel<String> res = await _clientService.DeleteClient(id);
+            if (res.Success == false)
+            {
+                return NotFound(res);
+            }
+
+            return Ok(res);
         }
     }
 }
